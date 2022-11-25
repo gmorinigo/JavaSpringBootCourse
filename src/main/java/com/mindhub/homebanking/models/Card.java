@@ -21,6 +21,8 @@ public class Card {
     private LocalDate fromDate;
     private LocalDate thruDate;
 
+    private boolean activeCard;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -37,6 +39,7 @@ public class Card {
         this.fromDate = fromDate;
         this.thruDate = thruDate;
         this.client = client;
+        this.activeCard = true;
     }
 
     public Long getId() {
@@ -110,5 +113,13 @@ public class Card {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public boolean isActiveCard() {
+        return activeCard;
+    }
+
+    public void setActiveCard(boolean activeCard) {
+        this.activeCard = activeCard;
     }
 }

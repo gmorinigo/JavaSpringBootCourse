@@ -36,5 +36,14 @@ public class CardServicesImpl implements ICardServices {
         return cardRepository.findByClient(client).stream().map(CardDTO::new).collect(toList());
     }
 
+    @Override
+    public Card findByNumber(String cardNumber) {
+        return cardRepository.findByNumber(cardNumber);
+    }
 
+    @Override
+    public void deleteCard(Card card) {
+        card.setActiveCard(false);
+        cardRepository.save(card);
+    }
 }

@@ -124,9 +124,9 @@ public class HomebankingApplication {
 				"4704-1111-2222-3333", 23, localDate, localDate.plusYears(5), melbaClient);
 		Card melbaSilverDebitCard = new Card(melbaClient.getFirstName() + " " + melbaClient.getLastName(),
 				CardType.DEBIT, CardColor.SILVER,
-				"4704-8484-2424-1234", 993, localDate, localDate.plusYears(5), melbaClient);
+				"4704-8484-2424-1234", 993, localDate, localDate.plusYears(-5), melbaClient);
 		Card melbaTitaniumCard = new Card(melbaClient.getFirstName() + melbaClient.getLastName(),CardType.CREDIT, CardColor.TITANIUM,
-				"4704-4444-5555-6666", 456, localDate, localDate.plusYears(5), melbaClient);
+				"4704-4444-5555-6666", 456, localDate, localDate.plusYears(-5), melbaClient);
 		Card gusTavoSilverCard = new Card(gusTavoClient.getFirstName() + gusTavoClient.getLastName(),CardType.CREDIT, CardColor.SILVER,
 				"4704-7777-8888-9999", 789, localDate, localDate.plusYears(5), gusTavoClient);
 		cardRepository.save(melbaGoldCard);

@@ -91,10 +91,9 @@
                                 </div>
                                 <div class="plastic-card__space-25">
                                     <span class="plastic-card__label">Expires</span>
-                                    <p class="plastic-card__info">{{ formatDate(card.thruDate) }}</p>
+                                    <p class="plastic-card__info">{{ verifyExpirationDate(card) }}</p>
                                 </div>
                             </div>
-            
                             <div v-bind:class="['plastic-card__back', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__black-line"></div>
                                 <div class="plastic-card__back-content">
@@ -131,7 +130,7 @@
                                 </div>
                                 <div class="plastic-card__space-25">
                                     <span class="plastic-card__label">Expires</span>
-                                    <p class="plastic-card__info">{{ formatDate(card.thruDate) }}</p>
+                                    <p class="plastic-card__info">{{ verifyExpirationDate(card) }}</p>
                                 </div>
                             </div>
             
