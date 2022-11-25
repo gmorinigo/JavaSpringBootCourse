@@ -26,6 +26,10 @@ public class ClientServicesImpl implements IClientServices {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    public ClientServicesImpl(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
     @Override
     public Client findByEmail(String email) {
         return clientRepository.findByEmail(email).orElse(null);
