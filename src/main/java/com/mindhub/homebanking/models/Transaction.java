@@ -21,6 +21,8 @@ public class Transaction {
 
     private LocalDateTime date;
 
+    private double accountamountaftertransaction;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
     private Account account;
@@ -34,6 +36,7 @@ public class Transaction {
         this.description = description;
         this.date = date;
         this.account = account;
+        this.accountamountaftertransaction = account.getBalance();
     }
 
     public Long getId() {
@@ -83,5 +86,13 @@ public class Transaction {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public double getAccountamountaftertransaction() {
+        return accountamountaftertransaction;
+    }
+
+    public void setAccountamountaftertransaction(double accountamountaftertransaction) {
+        this.accountamountaftertransaction = accountamountaftertransaction;
     }
 }

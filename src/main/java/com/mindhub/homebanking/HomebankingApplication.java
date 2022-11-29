@@ -53,12 +53,12 @@ public class HomebankingApplication {
 
 	private void createAccountsAndTransacctions(Client melbaClient, Client gusTavoClient, LocalDateTime dateTimeNow, AccountRepository accountRepository, TransactionRepository transactionRepository) {
 		Account accountTest1 = new Account("VIN001", dateTimeNow,5000,melbaClient);
-		Account accountTest2 = new Account("VIN002", dateTimeNow.plusDays(1),10000,melbaClient);
-		Account accountTest3 = new Account("VIN003", dateTimeNow.plusMonths(1),20000,gusTavoClient);
-		Account accountTest4 = new Account("VIN004", dateTimeNow.plusYears(1),30000,gusTavoClient);
 		accountRepository.save(accountTest1);
+		Account accountTest2 = new Account("VIN002", dateTimeNow.plusDays(1),10000,melbaClient);
 		accountRepository.save(accountTest2);
+		Account accountTest3 = new Account("VIN003", dateTimeNow.plusMonths(1),20000,gusTavoClient);
 		accountRepository.save(accountTest3);
+		Account accountTest4 = new Account("VIN004", dateTimeNow.plusYears(1),30000,gusTavoClient);
 		accountRepository.save(accountTest4);
 
 		this.createTransactions(dateTimeNow, transactionRepository, accountTest1, accountTest2, accountTest3, accountTest4);
