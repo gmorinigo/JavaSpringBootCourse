@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.repository;
 
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     List<Transaction> findByAmountGreaterThanAndAmountLessThan(double amountFrom, double amountTo);
 
     List<Transaction> findByType(TransactionType type);
+
+    List<Transaction> findByAccount(Account account);
 }

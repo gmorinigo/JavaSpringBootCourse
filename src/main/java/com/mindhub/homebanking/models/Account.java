@@ -21,6 +21,8 @@ public class Account {
 
     private double balance;
 
+    private boolean activeAccount;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -36,6 +38,7 @@ public class Account {
         this.creationDate = creationDate;
         this.balance = balance;
         this.client = client;
+        this.activeAccount = true;
     }
 
     public Long getId() {
@@ -86,5 +89,17 @@ public class Account {
     public void addTransaction(Transaction transaction) {
         transaction.setAccount(this);
         this.transactions.add(transaction);
+    }
+
+    public boolean isActiveAccount() {
+        return activeAccount;
+    }
+
+    public void setActiveAccount(boolean activeAccount) {
+        this.activeAccount = activeAccount;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

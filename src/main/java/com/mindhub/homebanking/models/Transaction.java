@@ -21,6 +21,8 @@ public class Transaction {
 
     private LocalDateTime date;
 
+    private boolean activeTransaction;
+
     private double accountamountaftertransaction;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,6 +39,7 @@ public class Transaction {
         this.date = date;
         this.account = account;
         this.accountamountaftertransaction = account.getBalance();
+        this.activeTransaction = true;
     }
 
     public Long getId() {
@@ -94,5 +97,13 @@ public class Transaction {
 
     public void setAccountamountaftertransaction(double accountamountaftertransaction) {
         this.accountamountaftertransaction = accountamountaftertransaction;
+   }
+
+    public boolean isActiveTransaction() {
+        return activeTransaction;
+    }
+
+    public void setActiveTransaction(boolean activeTransaction) {
+        this.activeTransaction = activeTransaction;
     }
 }

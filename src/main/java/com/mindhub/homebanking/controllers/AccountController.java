@@ -1,6 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.dtos.DeleteAccountDTO;
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.services.IAccountServices;
 import com.mindhub.homebanking.services.IClientServices;
@@ -45,7 +47,7 @@ public class AccountController {
 
     @GetMapping("accounts/bynumber/{number}")
     public AccountDTO getAccountsByNumber(@PathVariable String number){
-        return accountServices.findByNumber(number);
+        return accountServices.findByNumberDTO(number);
     }
 
     @PostMapping("clients/current/accounts")
@@ -74,14 +76,26 @@ public class AccountController {
         return accountsOfClientAuthenticated;
         //return new ResponseEntity<>(accountsOfClientAuthenticated, HttpStatus.OK);
     }
-/*
+
     @Transactional
     @DeleteMapping(path = "clients/current/accounts")
-    public List<AccountDTO> getAccounts (Authentication authentication, @RequestBody String accountNumber){
+    public ResponseEntity<Object> getAccounts (Authentication authentication, @RequestBody DeleteAccountDTO deleteAccountDTO){
+
         Client clientAuthenticated = clientServices.findByEmail(authentication.getName());
 
-        Account account = accountServices.findByNumber(accountNumber);
-        return accountsOfClientAuthenticated;
-        //return new ResponseEntity<>(accountsOfClientAuthenticated, HttpStatus.OK);
-    }*/
+        Account account = accountServices.findByNumber(deleteAccountDTO.getAccountNumber());
+
+        if (account == null)
+            return new ResponseEntity<>("Account does not exist", HttpStatus.FORBIDDEN);
+
+        if (clientAuthenticated.getId() != account.getClient().getId())
+            return new ResponseEntity<>("Account is not of the client", HttpStatus.FORBIDDEN);
+
+        if (account.getBalance() != 0)
+            return new ResponseEntity<>("Account balance will be zero", HttpStatus.FORBIDDEN);
+
+        accountServices.deleteAccount(account);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

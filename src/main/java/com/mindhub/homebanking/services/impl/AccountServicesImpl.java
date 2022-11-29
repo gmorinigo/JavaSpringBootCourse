@@ -3,8 +3,11 @@ package com.mindhub.homebanking.services.impl;
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repository.AccountRepository;
+import com.mindhub.homebanking.repository.TransactionRepository;
 import com.mindhub.homebanking.services.IAccountServices;
+import com.mindhub.homebanking.services.ITransactionServices;
 import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,9 @@ import static java.util.stream.Collectors.toList;
 public class AccountServicesImpl implements IAccountServices {
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
     @Override
     public List<AccountDTO> findAll() {
@@ -41,10 +47,15 @@ public class AccountServicesImpl implements IAccountServices {
     }
 
     @Override
-    public AccountDTO findByNumber(String number) {
+    public AccountDTO findByNumberDTO(String number) {
         return accountRepository.findByNumber(number).map(AccountDTO::new).orElse(null);
         //if (anAccount != null) return new AccountDTO(anAccount);
         //else return null;
+    }
+
+    @Override
+    public Account findByNumber(String number) {
+        return accountRepository.findByNumber(number).orElse(null);
     }
 
     @Override
@@ -88,4 +99,19 @@ public class AccountServicesImpl implements IAccountServices {
         }
         return accountNumber;
     }
+
+    @Override
+    public void deleteAccount(Account account) {
+        //transactionServices.deleteTransacctions(account);
+        List<Transaction> transactions = transactionRepository.findByAccount(account);
+
+        for (Transaction transaction: transactions){
+            transaction.setActiveTransaction(false);
+        }
+
+        transactionRepository.saveAll(transactions);
+        account.setActiveAccount(false);
+        accountRepository.save(account);
+    }
+
 }

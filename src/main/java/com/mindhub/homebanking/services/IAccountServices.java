@@ -15,7 +15,9 @@ public interface IAccountServices {
 
     List<AccountDTO> findByCreationDateLessThan(String date);
 
-    AccountDTO findByNumber(String number);
+    AccountDTO findByNumberDTO(String number);
+
+    Account findByNumber(String number);
 
     void generateAccount(Client aClient);
 
@@ -26,4 +28,6 @@ public interface IAccountServices {
     void addAmount(double amount, Account destinationAccount);
 
     List<AccountDTO> findByClientDTO(Client client);
+
+    void deleteAccount(Account account);
 }

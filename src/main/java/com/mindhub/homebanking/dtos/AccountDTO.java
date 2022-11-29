@@ -15,6 +15,8 @@ public class AccountDTO {
 
     private double balance;
 
+    private boolean activeAccount;
+
     private List<TransactionDTO> transactions;
 
     public AccountDTO(Account account) {
@@ -22,6 +24,7 @@ public class AccountDTO {
         this.number = account.getNumber();
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
+        this.activeAccount = account.isActiveAccount();
         this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
@@ -63,5 +66,13 @@ public class AccountDTO {
 
     public void setTransactions(List<TransactionDTO> transactions) {
         this.transactions = transactions;
+    }
+
+    public boolean isActiveAccount() {
+        return activeAccount;
+    }
+
+    public void setActiveAccount(boolean activeAccount) {
+        this.activeAccount = activeAccount;
     }
 }
