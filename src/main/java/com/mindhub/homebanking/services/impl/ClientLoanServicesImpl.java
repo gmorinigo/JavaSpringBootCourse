@@ -38,7 +38,7 @@ public class ClientLoanServicesImpl implements IClientLoanServices {
 
     @Override
     public void loanAcreditation(Client client, LoanRequestDTO loanRequestDTO, Loan loan, Account destinationAccount) {
-        double amountWithFee = loanRequestDTO.getAmount() * 1.20;
+        double amountWithFee = loanRequestDTO.getAmount() * loan.getInterestRate();
         ClientLoan clientLoan = new ClientLoan(amountWithFee,loanRequestDTO.getPayments(),
                 client, loan);
         clientLoanRepository.save(clientLoan);

@@ -89,14 +89,14 @@ public class HomebankingApplication {
 
 	private void createLoans(Client melbaClient, Client gusTavoClient, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
 		List<Integer> payments = List.of(12,24,36,48,60);
-		Loan hipotecaryLoan = new Loan("Hipotecario", 500000, payments);
+		Loan hipotecaryLoan = new Loan("Hipotecario", 500000, payments, 20);
 		loanRepository.save(hipotecaryLoan);
 
-		Loan personalLoan = new Loan("Personal", 100000, List.of(6,12,24));
+		Loan personalLoan = new Loan("Personal", 100000, List.of(6,12,24),18.5);
 		loanRepository.save(personalLoan);
 
 		payments = List.of(6,12,24,36);
-		Loan prendaryLoan = new Loan("Automotriz", 300000, payments);
+		Loan prendaryLoan = new Loan("Automotriz", 300000, payments,30);
 		loanRepository.save(prendaryLoan);
 
 		this.createClientLoans(melbaClient, gusTavoClient,hipotecaryLoan,personalLoan,prendaryLoan,clientLoanRepository);

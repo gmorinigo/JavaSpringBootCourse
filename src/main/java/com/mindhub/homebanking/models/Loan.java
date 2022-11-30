@@ -20,6 +20,8 @@ public class Loan {
 
     private double maxAmount;
 
+    private double interestRate;
+
     @ElementCollection
     private List<Integer> payments;
 
@@ -29,10 +31,11 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String name, double maxAmount, List<Integer> payments) {
+    public Loan(String name, double maxAmount, List<Integer> payments, double interestRate) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.interestRate = interestRate;
     }
 
     public Long getId() {
@@ -79,5 +82,13 @@ public class Loan {
     @JsonIgnore
     public List<Client> getClients() {
         return this.clientLoans.stream().map(ClientLoan::getClient).collect(Collectors.toList());
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
     }
 }
