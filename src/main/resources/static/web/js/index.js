@@ -24,7 +24,6 @@ var app = new Vue({
         evaluateRedirect: function(event){
             axios.get("/api/clients/current")
             .then((response) => {
-                //console.log(response.data.roles);
                 // Redirect con el .length
                 /*let hasRoleAdmin = response.data.roles.filter(function(role) {return role == "ADMIN"});
                 if (hasRoleAdmin.length > 0) window.location.href="/web/test/clients.html";
