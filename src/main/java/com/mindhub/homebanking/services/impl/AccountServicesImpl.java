@@ -7,7 +7,6 @@ import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repository.AccountRepository;
 import com.mindhub.homebanking.repository.TransactionRepository;
 import com.mindhub.homebanking.services.IAccountServices;
-import com.mindhub.homebanking.services.ITransactionServices;
 import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

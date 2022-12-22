@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 
+import com.mindhub.homebanking.dtos.CardApplicationDTO;
 import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class CardController {
            return new ResponseEntity<>("Client Not Found", HttpStatus.NOT_FOUND);
 
        if (aClient.getCards().stream().filter(card -> card.getType().equals(cardType) && card.isActiveCard()).count() > 2)
-           return new ResponseEntity<>("Maximum number of cards " + cardType.toString() + " exceeded"
+           return new ResponseEntity<>("Maximum number of cards " + cardType + " exceeded"
                    , HttpStatus.NOT_FOUND);
 
        cardServices.createCard(aClient,cardType,cardColor);
@@ -66,4 +68,35 @@ public class CardController {
 
     }
 
+    @PostMapping("/clients/validate/card")
+    public ResponseEntity<Object> validateClientCard (@RequestBody CardApplicationDTO paymentCard) {
+        Client loggedClient = clientServices.findByEmail(paymentCard.getEmail());
+        List<CardDTO> activeCards = cardServices.activeCards(loggedClient);
+        /*System.out.println("email: " + paymentCard.getEmail());
+        System.out.println("numTarjeta: " + paymentCard.getNumTarjeta());
+        System.out.println("cvv: " + paymentCard.getCvv());
+        System.out.println("anio: " + paymentCard.getAnioVencimiento());
+        System.out.println("mes: " + paymentCard.getMesVencimiento());*/
+        for (CardDTO card: activeCards) {
+            String paymentThruDate = paymentCard.getMesVencimiento().toString() + paymentCard.getAnioVencimiento().toString();
+            String cardNumber = card.getNumber().replace("-"," ");
+            String paymentNumber = paymentCard.getNumTarjeta();
+            /*System.out.println(" ");
+            System.out.println(cardNumber.equals(paymentNumber));
+            System.out.println(card.getCvv().equals(String.format("%0" + 3 + "d", paymentCard.getCvv())));
+            System.out.println(card.getThruDate().format(DateTimeFormatter.ofPattern("MMyy")).equals(paymentThruDate));
+            System.out.println("cardnumber: " + cardNumber);
+            System.out.println("paymentNumber: " + paymentNumber);
+            System.out.println("card.cvv: " + card.getCvv());
+            System.out.println("paymentCard.cvv: " + String.format("%0" + 3 + "d", paymentCard.getCvv()));
+            System.out.println("paymentThruDate: " + paymentThruDate);
+            System.out.println("card.thrudate: " + card.getThruDate().format(DateTimeFormatter.ofPattern("MMyy")));*/
+            if (cardNumber.equals(paymentNumber)
+                    && card.getCvv().equals(String.format("%0" + 3 + "d", paymentCard.getCvv()))
+                    && card.getThruDate().format(DateTimeFormatter.ofPattern("MMyy")).equals(paymentThruDate)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>("Invalid card", HttpStatus.FORBIDDEN);
+    }
 }
