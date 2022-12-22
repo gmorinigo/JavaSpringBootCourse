@@ -97,6 +97,7 @@ public class CardController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Invalid card", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        //return new ResponseEntity<>("Invalid card", HttpStatus.OK);
     }
 }
