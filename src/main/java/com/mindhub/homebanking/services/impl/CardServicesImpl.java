@@ -46,4 +46,15 @@ public class CardServicesImpl implements ICardServices {
         card.setActiveCard(false);
         cardRepository.save(card);
     }
+
+    @Override
+    public List<CardDTO> activeCards (Client client) {
+        for (Card card : client.getCards()) {
+            if (LocalDate.now().isAfter(card.getThruDate())) {
+                card.setActiveCard(false);
+                //card.setCardStatusActive(false);
+            }
+        }
+        return client.getCards().stream().filter(Card::isActiveCard).map(CardDTO::new).collect(toList());
+    }
 }

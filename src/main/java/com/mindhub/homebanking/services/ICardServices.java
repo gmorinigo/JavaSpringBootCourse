@@ -16,4 +16,6 @@ public interface ICardServices {
     Card findByNumber(String cardNumber);
 
     void deleteCard(Card card);
+
+    List<CardDTO> activeCards(Client loggedClient);
 }
